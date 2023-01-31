@@ -1,0 +1,27 @@
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+
+public class GameManager : MonoBehaviour
+{
+    public TextMeshProUGUI player1ScoreText;
+    public TextMeshProUGUI player2ScoreText;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        player1ScoreText.text = "Player 1: ";
+        player2ScoreText.text = "Player 2: ";
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
+
+}
