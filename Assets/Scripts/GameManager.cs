@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public TextMeshProUGUI player1ScoreText;
     public TextMeshProUGUI player2ScoreText;
+    public List<Player> players;
 
     // Start is called before the first frame update
     void Start()

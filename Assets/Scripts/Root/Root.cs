@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class Root : MonoBehaviour
 {
+    [SerializeField] GameManager gameManager;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.CompareTag("Player1"))
         {
-            collision.gameObject.GetComponent<Player>().score++;
-            FindObjectOfType<GameManager>().player1ScoreText.text = "Player 1: " + collision.gameObject.GetComponent<Player>().score;
+            collision.gameObject.GetComponent<Player>().isCollected = true;
+            collision.gameObject.GetComponent<Player>().rootCollectedByPlayer.SetActive(true);
+            this.gameObject.SetActive(false);
+            
         }
         else if((collision.gameObject.CompareTag("Player2")))
         {
-            collision.gameObject.GetComponent<Player>().score++;
-            FindObjectOfType<GameManager>().player2ScoreText.text = "Player 2: " + collision.gameObject.GetComponent<Player>().score;
+            collision.gameObject.GetComponent<Player>().isCollected = true;
+            collision.gameObject.GetComponent<Player>().rootCollectedByPlayer.SetActive(true);
+            this.gameObject.SetActive(false);
         }
     }
 }

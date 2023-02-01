@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] float speed;
     [SerializeField] Rigidbody2D playerRb;
+    [SerializeField] Player player;
 
 
     //public void OnGetMovementInputEvent(InputAction.CallbackContext ctx)
@@ -25,23 +25,32 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.W))
             {
-                playerRb.velocity += speed * Vector2.up;
+                playerRb.velocity = player.speed * Vector2.up;
+                player.playerAnim.SetBool("isWalking", true);
+                transform.rotation = Quaternion.Euler(0, 0, 0);
             }
             else if (Input.GetKey(KeyCode.S))
             {
-                playerRb.velocity += speed * Vector2.down;
+                transform.rotation = Quaternion.Euler(0, 0, 180);
+                playerRb.velocity = player.speed * Vector2.down;
+                player.playerAnim.SetBool("isWalking", true);
             }
             else if (Input.GetKey(KeyCode.A))
             {
-                playerRb.velocity += speed * Vector2.left;
+                transform.rotation = Quaternion.Euler(0, 0, 90);
+                playerRb.velocity = player.speed * Vector2.left;
+                player.playerAnim.SetBool("isWalking", true);
             }
             else if (Input.GetKey(KeyCode.D))
             {
-                playerRb.velocity += speed * Vector2.right;
+                transform.rotation = transform.rotation = Quaternion.Euler(0, 0, 270);
+                playerRb.velocity = player.speed * Vector2.right;
+                player.playerAnim.SetBool("isWalking", true);
             }
             else
             {
                 playerRb.velocity = new Vector2(0, 0);
+                player.playerAnim.SetBool("isWalking", false);
             }
         }
 
@@ -49,23 +58,32 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.UpArrow))
             {
-                playerRb.velocity += speed * Vector2.up;
+                playerRb.velocity = player.speed * Vector2.up;
+                player.playerAnim.SetBool("isWalking", true);
+                transform.rotation = Quaternion.Euler(0, 0, 0);
             }
             else if (Input.GetKey(KeyCode.DownArrow))
             {
-                playerRb.velocity += speed * Vector2.down;
+                transform.rotation = Quaternion.Euler(0, 0, 180);
+                playerRb.velocity = player.speed * Vector2.down;
+                player.playerAnim.SetBool("isWalking", true);
             }
             else if (Input.GetKey(KeyCode.LeftArrow))
             {
-                playerRb.velocity += speed * Vector2.left;
+                transform.rotation = Quaternion.Euler(0, 0, 90);
+                playerRb.velocity = player.speed * Vector2.left;
+                player.playerAnim.SetBool("isWalking", true);
             }
             else if (Input.GetKey(KeyCode.RightArrow))
             {
-                playerRb.velocity += speed * Vector2.right;
+                transform.rotation = transform.rotation = Quaternion.Euler(0, 0, 270);
+                playerRb.velocity = player.speed * Vector2.right;
+                player.playerAnim.SetBool("isWalking", true);
             }
             else
             {
                 playerRb.velocity = new Vector2(0, 0);
+                player.playerAnim.SetBool("isWalking", false);
             }
         }
     }
