@@ -12,8 +12,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player1ScoreText.text = "Player 1: ";
-        player2ScoreText.text = "Player 2: ";
+        player1ScoreText.text = "P1: ";
+        player2ScoreText.text = "P2: ";
     }
 
     // Update is called once per frame

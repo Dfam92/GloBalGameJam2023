@@ -8,6 +8,10 @@ TagManager:
   - Player2
   - PlayerBase1
   - PlayerBase2
+  - Hole1
+  - Hole2
+  - Hole3
+  - Hole4
   layers:
   - Default
   - TransparentFX

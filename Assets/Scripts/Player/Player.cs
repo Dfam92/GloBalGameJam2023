@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public Animator playerAnim;
     [SerializeField] int playerindex;
     public GameObject rootCollectedByPlayer;
+    [SerializeField] SpotsManager spotsManager;
 
     private void Start()
     {
@@ -29,18 +30,22 @@ public class Player : MonoBehaviour
         if(playerindex == 1 && isCollected && collision.gameObject.CompareTag("PlayerBase1"))
         {
             score++;
-            FindObjectOfType<GameManager>().player1ScoreText.text = "Player 1: " + score;
+            FindObjectOfType<GameManager>().player1ScoreText.text = "P1: " + score;
             rootCollectedByPlayer.SetActive(false);
             isCollected = false;
+            spotsManager.SpawnRandomizeRoot();
         }
 
         if (playerindex == 2 && isCollected && collision.gameObject.CompareTag("PlayerBase2"))
         {
             score++;
-            FindObjectOfType<GameManager>().player2ScoreText.text = "Player 2: " + score;
+            FindObjectOfType<GameManager>().player2ScoreText.text = "P2: " + score;
             rootCollectedByPlayer.SetActive(false);
             isCollected = false;
+            spotsManager.SpawnRandomizeRoot();
         }
 
     }
+
+    
 }
