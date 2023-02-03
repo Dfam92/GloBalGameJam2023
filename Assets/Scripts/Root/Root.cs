@@ -13,13 +13,14 @@ public class Root : MonoBehaviour
             collision.gameObject.GetComponent<Player>().isCollected = true;
             collision.gameObject.GetComponent<Player>().rootCollectedByPlayer.SetActive(true);
             this.gameObject.SetActive(false);
-            
+            FindObjectOfType<SfxAudioManager>().PlayLootSound();
         }
         else if((collision.gameObject.CompareTag("Player2")))
         {
             collision.gameObject.GetComponent<Player>().isCollected = true;
             collision.gameObject.GetComponent<Player>().rootCollectedByPlayer.SetActive(true);
             this.gameObject.SetActive(false);
+            FindObjectOfType<SfxAudioManager>().PlayLootSound();
         }
     }
 }

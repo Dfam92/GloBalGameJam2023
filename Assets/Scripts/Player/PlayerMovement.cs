@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] Rigidbody2D playerRb;
     [SerializeField] Player player;
     [SerializeField] float timeToSit;
+    [SerializeField] float torque;
     private bool isSat = false;
 
 
@@ -38,8 +40,43 @@ public class PlayerMovement : MonoBehaviour
         isSat = false;
     }
 
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (player.isAttacking)
+    //    {
+            
+    //    }
+    //}
+
+    //private void Attack()
+    //{
+
+    //    if (!player.isAttacking)
+    //    {
+    //        if (Input.GetKeyDown(KeyCode.Space))
+    //        {
+    //            player.playerAnim.SetBool("isAttacking", true);
+    //            player.isAttacking = true;
+    //        }
+    //    }
+
+    //    if (player.isAttacking)
+    //    {
+    //        StartCoroutine(CanAttackAgain());
+    //    }
+    //}
+
+    //IEnumerator CanAttackAgain()
+    //{
+    //    yield return new WaitForSeconds(0.5f);
+    //    player.playerAnim.SetBool("isAttacking", false);
+    //    player.isAttacking = false;
+    //}
+
     private void FixedUpdate()
     {
+        //Attack();
+
         if (this.gameObject.CompareTag("Player1"))
         {
             if (Input.GetKey(KeyCode.W))
@@ -48,6 +85,7 @@ public class PlayerMovement : MonoBehaviour
                 player.playerAnim.SetBool("isWalking", true);
                 transform.rotation = Quaternion.Euler(0, 0, 0);
                 StopSitting();
+                player.PlayPlayerSteps();
             }
             else if (Input.GetKey(KeyCode.S))
             {
@@ -55,6 +93,7 @@ public class PlayerMovement : MonoBehaviour
                 playerRb.velocity = player.speed * Vector2.down;
                 player.playerAnim.SetBool("isWalking", true);
                 StopSitting();
+                player.PlayPlayerSteps();
             }
             else if (Input.GetKey(KeyCode.A))
             {
@@ -62,6 +101,7 @@ public class PlayerMovement : MonoBehaviour
                 playerRb.velocity = player.speed * Vector2.left;
                 player.playerAnim.SetBool("isWalking", true);
                 StopSitting();
+                player.PlayPlayerSteps();
             }
             else if (Input.GetKey(KeyCode.D))
             {
@@ -69,12 +109,14 @@ public class PlayerMovement : MonoBehaviour
                 playerRb.velocity = player.speed * Vector2.right;
                 player.playerAnim.SetBool("isWalking", true);
                 StopSitting();
+                player.PlayPlayerSteps();
             }
             else
             {
                 playerRb.velocity = new Vector2(0, 0);
                 player.playerAnim.SetBool("isWalking", false);
                 StartCoroutine(SittingStart());
+                player.playerAudio.Stop();
             }
         }
 
@@ -85,6 +127,7 @@ public class PlayerMovement : MonoBehaviour
                 playerRb.velocity = player.speed * Vector2.up;
                 player.playerAnim.SetBool("isWalking", true);
                 transform.rotation = Quaternion.Euler(0, 0, 0);
+                player.PlayPlayerSteps();
                 StopSitting();
             }
             else if (Input.GetKey(KeyCode.DownArrow))
@@ -92,6 +135,7 @@ public class PlayerMovement : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0, 0, 180);
                 playerRb.velocity = player.speed * Vector2.down;
                 player.playerAnim.SetBool("isWalking", true);
+                player.PlayPlayerSteps();
                 StopSitting();
             }
             else if (Input.GetKey(KeyCode.LeftArrow))
@@ -99,6 +143,7 @@ public class PlayerMovement : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0, 0, 90);
                 playerRb.velocity = player.speed * Vector2.left;
                 player.playerAnim.SetBool("isWalking", true);
+                player.PlayPlayerSteps();
                 StopSitting();
             }
             else if (Input.GetKey(KeyCode.RightArrow))
@@ -106,6 +151,7 @@ public class PlayerMovement : MonoBehaviour
                 transform.rotation = transform.rotation = Quaternion.Euler(0, 0, 270);
                 playerRb.velocity = player.speed * Vector2.right;
                 player.playerAnim.SetBool("isWalking", true);
+                player.PlayPlayerSteps();
                 StopSitting();
             }
             else
@@ -113,6 +159,7 @@ public class PlayerMovement : MonoBehaviour
                 playerRb.velocity = new Vector2(0, 0);
                 player.playerAnim.SetBool("isWalking", false);
                 StartCoroutine(SittingStart());
+                player.playerAudio.Stop();
             }
         }
     }

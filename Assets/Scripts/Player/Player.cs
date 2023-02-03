@@ -7,11 +7,18 @@ public class Player : MonoBehaviour
 {
     public int score;
     public float speed;
-    public bool isCollected;
+
+    public bool isCollected = false;
+    public bool isAttacking = false;
+    public bool isTauting = false;
+
     public Animator playerAnim;
     [SerializeField] int playerindex;
     public GameObject rootCollectedByPlayer;
     [SerializeField] SpotsManager spotsManager;
+    public AudioSource playerAudio;
+    [SerializeField] AudioClip footSteps;
+    public Color playerColor;
 
     private void Start()
     {
@@ -25,12 +32,31 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void PlaySfx(AudioClip clip, float value)
+    {
+        if (playerAudio != null)
+        {
+            if(!playerAudio.isPlaying)
+            {
+                playerAudio.PlayOneShot(clip, value);
+            }
+            
+        }
+
+    }
+
+    public void PlayPlayerSteps()
+    {
+        PlaySfx(footSteps, 1 - 0.6f);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(playerindex == 1 && isCollected && collision.gameObject.CompareTag("PlayerBase1"))
         {
             score++;
             FindObjectOfType<GameManager>().player1ScoreText.text = "P1: " + score;
+            FindObjectOfType<SfxAudioManager>().PlayPlayerGoal();
             rootCollectedByPlayer.SetActive(false);
             isCollected = false;
             spotsManager.SpawnRandomizeRoot();
@@ -40,6 +66,7 @@ public class Player : MonoBehaviour
         {
             score++;
             FindObjectOfType<GameManager>().player2ScoreText.text = "P2: " + score;
+            FindObjectOfType<SfxAudioManager>().PlayPlayerGoal();
             rootCollectedByPlayer.SetActive(false);
             isCollected = false;
             spotsManager.SpawnRandomizeRoot();
@@ -47,5 +74,5 @@ public class Player : MonoBehaviour
 
     }
 
-    
+   
 }
