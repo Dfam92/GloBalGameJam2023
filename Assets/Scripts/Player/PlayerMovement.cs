@@ -10,7 +10,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float timeToSit;
     [SerializeField] float torque;
     private bool isSat = false;
+    private GameManager gameManager;
 
+    private void Awake()
+    {
+        gameManager = FindObjectOfType<GameManager>();
+    }
 
     //public void OnGetMovementInputEvent(InputAction.CallbackContext ctx)
     //{
@@ -76,91 +81,94 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         //Attack();
-
-        if (this.gameObject.CompareTag("Player1"))
+        if(gameManager.gameStarted)
         {
-            if (Input.GetKey(KeyCode.W))
+            if (this.gameObject.CompareTag("Player1"))
             {
-                playerRb.velocity = player.speed * Vector2.up;
-                player.playerAnim.SetBool("isWalking", true);
-                transform.rotation = Quaternion.Euler(0, 0, 0);
-                StopSitting();
-                player.PlayPlayerSteps();
+                if (Input.GetKey(KeyCode.W))
+                {
+                    playerRb.velocity = player.speed * Vector2.up;
+                    player.playerAnim.SetBool("isWalking", true);
+                    transform.rotation = Quaternion.Euler(0, 0, 0);
+                    StopSitting();
+                    player.PlayPlayerSteps();
+                }
+                else if (Input.GetKey(KeyCode.S))
+                {
+                    transform.rotation = Quaternion.Euler(0, 0, 180);
+                    playerRb.velocity = player.speed * Vector2.down;
+                    player.playerAnim.SetBool("isWalking", true);
+                    StopSitting();
+                    player.PlayPlayerSteps();
+                }
+                else if (Input.GetKey(KeyCode.A))
+                {
+                    transform.rotation = Quaternion.Euler(0, 0, 90);
+                    playerRb.velocity = player.speed * Vector2.left;
+                    player.playerAnim.SetBool("isWalking", true);
+                    StopSitting();
+                    player.PlayPlayerSteps();
+                }
+                else if (Input.GetKey(KeyCode.D))
+                {
+                    transform.rotation = transform.rotation = Quaternion.Euler(0, 0, 270);
+                    playerRb.velocity = player.speed * Vector2.right;
+                    player.playerAnim.SetBool("isWalking", true);
+                    StopSitting();
+                    player.PlayPlayerSteps();
+                }
+                else
+                {
+                    playerRb.velocity = new Vector2(0, 0);
+                    player.playerAnim.SetBool("isWalking", false);
+                    StartCoroutine(SittingStart());
+                    player.playerAudio.Stop();
+                }
             }
-            else if (Input.GetKey(KeyCode.S))
+
+            if (this.gameObject.CompareTag("Player2"))
             {
-                transform.rotation = Quaternion.Euler(0, 0, 180);
-                playerRb.velocity = player.speed * Vector2.down;
-                player.playerAnim.SetBool("isWalking", true);
-                StopSitting();
-                player.PlayPlayerSteps();
-            }
-            else if (Input.GetKey(KeyCode.A))
-            {
-                transform.rotation = Quaternion.Euler(0, 0, 90);
-                playerRb.velocity = player.speed * Vector2.left;
-                player.playerAnim.SetBool("isWalking", true);
-                StopSitting();
-                player.PlayPlayerSteps();
-            }
-            else if (Input.GetKey(KeyCode.D))
-            {
-                transform.rotation = transform.rotation = Quaternion.Euler(0, 0, 270);
-                playerRb.velocity = player.speed * Vector2.right;
-                player.playerAnim.SetBool("isWalking", true);
-                StopSitting();
-                player.PlayPlayerSteps();
-            }
-            else
-            {
-                playerRb.velocity = new Vector2(0, 0);
-                player.playerAnim.SetBool("isWalking", false);
-                StartCoroutine(SittingStart());
-                player.playerAudio.Stop();
+                if (Input.GetKey(KeyCode.UpArrow))
+                {
+                    playerRb.velocity = player.speed * Vector2.up;
+                    player.playerAnim.SetBool("isWalking", true);
+                    transform.rotation = Quaternion.Euler(0, 0, 0);
+                    player.PlayPlayerSteps();
+                    StopSitting();
+                }
+                else if (Input.GetKey(KeyCode.DownArrow))
+                {
+                    transform.rotation = Quaternion.Euler(0, 0, 180);
+                    playerRb.velocity = player.speed * Vector2.down;
+                    player.playerAnim.SetBool("isWalking", true);
+                    player.PlayPlayerSteps();
+                    StopSitting();
+                }
+                else if (Input.GetKey(KeyCode.LeftArrow))
+                {
+                    transform.rotation = Quaternion.Euler(0, 0, 90);
+                    playerRb.velocity = player.speed * Vector2.left;
+                    player.playerAnim.SetBool("isWalking", true);
+                    player.PlayPlayerSteps();
+                    StopSitting();
+                }
+                else if (Input.GetKey(KeyCode.RightArrow))
+                {
+                    transform.rotation = transform.rotation = Quaternion.Euler(0, 0, 270);
+                    playerRb.velocity = player.speed * Vector2.right;
+                    player.playerAnim.SetBool("isWalking", true);
+                    player.PlayPlayerSteps();
+                    StopSitting();
+                }
+                else
+                {
+                    playerRb.velocity = new Vector2(0, 0);
+                    player.playerAnim.SetBool("isWalking", false);
+                    StartCoroutine(SittingStart());
+                    player.playerAudio.Stop();
+                }
             }
         }
-
-        if (this.gameObject.CompareTag("Player2"))
-        {
-            if (Input.GetKey(KeyCode.UpArrow))
-            {
-                playerRb.velocity = player.speed * Vector2.up;
-                player.playerAnim.SetBool("isWalking", true);
-                transform.rotation = Quaternion.Euler(0, 0, 0);
-                player.PlayPlayerSteps();
-                StopSitting();
-            }
-            else if (Input.GetKey(KeyCode.DownArrow))
-            {
-                transform.rotation = Quaternion.Euler(0, 0, 180);
-                playerRb.velocity = player.speed * Vector2.down;
-                player.playerAnim.SetBool("isWalking", true);
-                player.PlayPlayerSteps();
-                StopSitting();
-            }
-            else if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                transform.rotation = Quaternion.Euler(0, 0, 90);
-                playerRb.velocity = player.speed * Vector2.left;
-                player.playerAnim.SetBool("isWalking", true);
-                player.PlayPlayerSteps();
-                StopSitting();
-            }
-            else if (Input.GetKey(KeyCode.RightArrow))
-            {
-                transform.rotation = transform.rotation = Quaternion.Euler(0, 0, 270);
-                playerRb.velocity = player.speed * Vector2.right;
-                player.playerAnim.SetBool("isWalking", true);
-                player.PlayPlayerSteps();
-                StopSitting();
-            }
-            else
-            {
-                playerRb.velocity = new Vector2(0, 0);
-                player.playerAnim.SetBool("isWalking", false);
-                StartCoroutine(SittingStart());
-                player.playerAudio.Stop();
-            }
-        }
+        
     }
 }

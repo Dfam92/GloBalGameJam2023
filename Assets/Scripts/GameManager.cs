@@ -12,11 +12,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject gameOverPanel;
     public List<Player> players;
 
+    public bool gameStarted;
+
     // Start is called before the first frame update
     void Start()
     {
+        StartCoroutine(StartGameDelayed());
         player1ScoreText.text = "P1: ";
         player2ScoreText.text = "P2: ";
+        
     }
 
     // Update is called once per frame
@@ -26,6 +30,12 @@ public class GameManager : MonoBehaviour
         {
             Application.Quit();
         }
+    }
+
+    IEnumerator StartGameDelayed()
+    {
+        yield return new WaitForSeconds(2);
+        gameStarted = true;
     }
 
     public void GameOver()

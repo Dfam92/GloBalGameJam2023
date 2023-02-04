@@ -50,7 +50,7 @@ public class SfxAudioManager : MonoBehaviour
 
     public void PlayUIStart()
     {
-        PlaySfx(UIStartSfx, sfxVolume - 0.6f);
+        PlaySfx(UIStartSfx, sfxVolume);
     }
 
 }
