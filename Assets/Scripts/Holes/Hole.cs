@@ -4,29 +4,36 @@ using UnityEngine;
 
 public class Hole : MonoBehaviour
 {
-    [SerializeField] GameObject hole1;
-    [SerializeField] GameObject hole2;
-    [SerializeField] GameObject hole3;
-    [SerializeField] GameObject hole4;
+    [SerializeField] HolesManager holesManager;
+    [SerializeField] int holeIndex;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(this.gameObject.CompareTag("Hole1"))
+        if(this.gameObject.CompareTag("Hole"))
         {
-            collision.GetComponent<Player>().gameObject.transform.position = hole2.transform.position;
+            if(!collision.GetComponent<Player>().isDigging)
+            {
+                Debug.Log(holesManager.holes.Count);
+                int index = Random.Range(0, holesManager.holes.Count);
+                bool differentNumber = false;
+                while(!differentNumber)
+                {
+                    index = Random.Range(0, holesManager.holes.Count);
+                    if (index != holeIndex)
+                    {
+                        differentNumber = true;
+                    }
+                    
+                }
+                collision.GetComponent<Player>().gameObject.transform.position = holesManager.holes[index].transform.position;
+                StartCoroutine(ReactiveCollider(collision.GetComponent<Player>()));
+                collision.GetComponent<Player>().isDigging = true;
+            }
         }
-        //else if (this.gameObject.CompareTag("Hole2"))
-        //{
-        //    collision.GetComponent<Player>().gameObject.transform.position = hole1.transform.position;
-        //}
+    }
 
-        //if (this.gameObject.CompareTag("Hole3"))
-        //{
-        //    collision.GetComponent<Player>().gameObject.transform.position = hole4.transform.position;
-            
-        //}
-        if (this.gameObject.CompareTag("Hole4"))
-        {
-            collision.GetComponent<Player>().gameObject.transform.position = hole3.transform.position;
-        }
+    IEnumerator ReactiveCollider(Player player)
+    {
+        yield return new WaitForSeconds(1);
+        player.isDigging = false;
     }
 }

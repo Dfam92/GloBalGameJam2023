@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public bool isCollected = false;
     public bool isAttacking = false;
     public bool isTauting = false;
+    public bool isDigging = false;
 
     public Animator playerAnim;
     [SerializeField] int playerindex;
