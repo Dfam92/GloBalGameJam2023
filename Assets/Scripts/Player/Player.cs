@@ -92,7 +92,28 @@ public class Player : MonoBehaviour
             spotsManager.SpawnRandomizeRoot();
         }
 
+        //if(playerindex == 1 && !this.isCollected && collision.gameObject.CompareTag("Player2"))
+        //{
+        //    if(collision.gameObject.CompareTag("Player2"))
+        //    {
+        //        this.isCollected = true;
+        //        Player otherPlayer = collision.GetComponent<Player>();
+        //        otherPlayer.isCollected = false;
+        //        otherPlayer.isTauting = true;
+        //        otherPlayer.speed = 0;
+        //        StartCoroutine(FinishTauntPlayer(otherPlayer));
+        //    }
+        //}
+
+       
     }
 
-   
+    //IEnumerator FinishTauntPlayer(Player player)
+    //{
+    //    yield return new WaitForSeconds(2);
+    //    player.speed = defaultSpeed;
+    //    player.isTauting = false;
+    //}
+
+
 }
