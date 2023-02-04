@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpotsManager : MonoBehaviour
 {
     public List<Root> possibleRootsSpot;
-    [SerializeField] GameObject root;
+    [SerializeField] List<GameObject> roots;
 
     // Start is called before the first frame update
     void Start()
@@ -15,6 +15,6 @@ public class SpotsManager : MonoBehaviour
 
     public void SpawnRandomizeRoot()
     {
-        Instantiate(root, possibleRootsSpot[Random.Range(0, possibleRootsSpot.Count - 1)].transform.position, Quaternion.identity);
+        Instantiate(roots[Random.Range(0, roots.Count)], possibleRootsSpot[Random.Range(0, possibleRootsSpot.Count)].transform.position, Quaternion.identity);
     }
 }
