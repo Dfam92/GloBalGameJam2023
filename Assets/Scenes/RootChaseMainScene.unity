@@ -3946,6 +3946,7 @@ MonoBehaviour:
   players:
   - {fileID: 1684799929}
   - {fileID: 798024535}
+  gameStarted: 0
 --- !u!4 &1505001310
 Transform:
   m_ObjectHideFlags: 0
@@ -4570,8 +4571,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 9078961796977022952, guid: ccd5fe2cbdeebb941a05d99b0539ee78, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9078961796977022952, guid: ccd5fe2cbdeebb941a05d99b0539ee78, type: 3}
+      propertyPath: introMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: d66fecfee2619d14abad82fd261c488c, type: 3}
     - target: {fileID: 9078961796977022953, guid: ccd5fe2cbdeebb941a05d99b0539ee78, type: 3}
       propertyPath: m_RootOrder
       value: 13

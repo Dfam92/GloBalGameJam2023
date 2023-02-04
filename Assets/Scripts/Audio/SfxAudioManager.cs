@@ -13,6 +13,8 @@ public class SfxAudioManager : MonoBehaviour
     [SerializeField] AudioClip UIStartSfx;
     [SerializeField] private float sfxVolume;
 
+    public bool gameStarted;
+
 
     public void PlaySfx(AudioClip clip, float value)
     {
@@ -45,7 +47,16 @@ public class SfxAudioManager : MonoBehaviour
 
     public void PlayUIHover()
     {
-        PlaySfx(UIHoverSfx, sfxVolume - 0.6f);
+        if(!gameStarted)
+        {
+            PlaySfx(UIHoverSfx, sfxVolume - 0.6f);
+        }      
+        
+    }
+
+    public void TurnGameStartedTrue()
+    {
+        gameStarted = true;
     }
 
     public void PlayUIStart()
