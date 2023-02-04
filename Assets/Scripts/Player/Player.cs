@@ -20,8 +20,15 @@ public class Player : MonoBehaviour
     [SerializeField] AudioClip footSteps;
     public Color playerColor;
 
+    private float defaultSpeed;
+    private float speedWithLower;
+    [SerializeField] float speedVariation;
+
     private void Start()
     {
+        defaultSpeed = speed;
+        speedWithLower = speed * speedVariation;
+
         if(this.gameObject.CompareTag("Player1"))
         {
             playerindex = 1;
@@ -43,6 +50,18 @@ public class Player : MonoBehaviour
             
         }
 
+    }
+
+    private void Update()
+    {
+        if(isCollected)
+        {
+            speed = defaultSpeed - speedWithLower;
+        }
+        else
+        {
+            speed = defaultSpeed;
+        }
     }
 
     public void PlayPlayerSteps()

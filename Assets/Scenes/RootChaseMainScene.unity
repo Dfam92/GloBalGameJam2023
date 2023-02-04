@@ -494,7 +494,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -31, y: -40.804993}
+  m_AnchoredPosition: {x: -31, y: -40.80493}
   m_SizeDelta: {x: -894.79, y: -503.32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &95829842
@@ -2598,6 +2598,7 @@ MonoBehaviour:
   playerAudio: {fileID: 798024539}
   footSteps: {fileID: 8300000, guid: b243395564e52604286c8ef00ab00ab7, type: 3}
   playerColor: {r: 0, g: 0.10835719, b: 1, a: 1}
+  speedVariation: 0.1
 --- !u!212 &798024536
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4165,6 +4166,7 @@ MonoBehaviour:
   playerAudio: {fileID: 1684799937}
   footSteps: {fileID: 8300000, guid: b243395564e52604286c8ef00ab00ab7, type: 3}
   playerColor: {r: 1, g: 0, b: 0.03164482, a: 1}
+  speedVariation: 0.1
 --- !u!212 &1684799931
 SpriteRenderer:
   m_ObjectHideFlags: 0
