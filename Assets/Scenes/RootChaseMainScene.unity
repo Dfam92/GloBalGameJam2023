@@ -2519,7 +2519,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &798024534
 MonoBehaviour:
@@ -3946,6 +3946,7 @@ MonoBehaviour:
   players:
   - {fileID: 1684799929}
   - {fileID: 798024535}
+  gameStarted: 0
 --- !u!4 &1505001310
 Transform:
   m_ObjectHideFlags: 0
@@ -3973,7 +3974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 825bba867df678a4f8d8847f7d7af92d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roundTime: 60
+  roundTime: 10
   timeValue: 0
   delayToStartGame: 2
   timerTxt: {fileID: 1399284921}
@@ -4261,7 +4262,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!95 &1684799935
 Animator:
@@ -4296,8 +4297,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0037490844, y: 0.030929292}
-  m_Size: {x: 0.28393862, y: 0.84441626}
+  m_Offset: {x: -0.039707128, y: 0.030929279}
+  m_Size: {x: 0.11851695, y: 0.8444162}
   m_Direction: 0
 --- !u!82 &1684799937
 AudioSource:
@@ -4570,8 +4571,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 9078961796977022952, guid: ccd5fe2cbdeebb941a05d99b0539ee78, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9078961796977022952, guid: ccd5fe2cbdeebb941a05d99b0539ee78, type: 3}
+      propertyPath: introMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: d66fecfee2619d14abad82fd261c488c, type: 3}
     - target: {fileID: 9078961796977022953, guid: ccd5fe2cbdeebb941a05d99b0539ee78, type: 3}
       propertyPath: m_RootOrder
       value: 13
@@ -4619,6 +4624,14 @@ PrefabInstance:
     - target: {fileID: 9078961796977022954, guid: ccd5fe2cbdeebb941a05d99b0539ee78, type: 3}
       propertyPath: m_Name
       value: MusicManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078961796977022955, guid: ccd5fe2cbdeebb941a05d99b0539ee78, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078961796977022955, guid: ccd5fe2cbdeebb941a05d99b0539ee78, type: 3}
+      propertyPath: BypassReverbZones
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ccd5fe2cbdeebb941a05d99b0539ee78, type: 3}
