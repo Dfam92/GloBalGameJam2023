@@ -33,7 +33,7 @@ public class Hole : MonoBehaviour
 
     IEnumerator ReactiveCollider(Player player)
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         player.isDigging = false;
     }
 }
