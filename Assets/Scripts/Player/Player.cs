@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 
 public class Player : MonoBehaviour
@@ -15,7 +16,6 @@ public class Player : MonoBehaviour
 
     public Animator playerAnim;
     [SerializeField] int playerindex;
-    public GameObject rootCollectedByPlayer;
     [SerializeField] SpotsManager spotsManager;
     public AudioSource playerAudio;
     [SerializeField] AudioClip footSteps;
@@ -24,6 +24,11 @@ public class Player : MonoBehaviour
     private float defaultSpeed;
     private float speedWithLower;
     [SerializeField] float speedVariation;
+    public List<GameObject> rootHold;
+
+    [SerializeField] GameObject playerBase1;
+    [SerializeField] GameObject playerBase2;
+
 
     private void Start()
     {
@@ -53,11 +58,16 @@ public class Player : MonoBehaviour
 
     }
 
+
     private void Update()
     {
         if(isCollected)
         {
             speed = defaultSpeed - speedWithLower;
+        }
+        else if(isTauting)
+        {
+            speed = 0;
         }
         else
         {
@@ -70,6 +80,100 @@ public class Player : MonoBehaviour
         PlaySfx(footSteps, 1 - 0.6f);
     }
 
+    private void DisableRootHoldToBase()
+    {
+        foreach (GameObject root in rootHold)
+        {
+            if(root.activeInHierarchy)
+            {
+                if(this.gameObject.CompareTag("Player1"))
+                {
+                    Tween rootJump = root.transform.DOJump(playerBase1.transform.position, 0.5f, 1, 1);
+                    rootJump.OnComplete(() => ResetTween(root));
+                }
+                else if(this.gameObject.CompareTag("Player2"))
+                {
+                    Tween rootJump = root.transform.DOJump(playerBase2.transform.position, 0.5f, 1, 1);
+                    rootJump.OnComplete(() => ResetTween(root));
+                }
+            }
+                
+        }
+    }
+
+    private void DisableRootToPlayer(Player otherPlayer)
+    {
+        foreach (GameObject root in rootHold)
+        {
+            if(root.activeInHierarchy)
+            {
+                if (this.gameObject.CompareTag("Player1"))
+                {
+                    Tween rootJump = root.transform.DOJump(otherPlayer.transform.position, 0.5f, 1, 0.2f);
+                    rootJump.OnComplete(() => ResetTween(root));
+                }
+                else if (this.gameObject.CompareTag("Player2"))
+                {
+                    Tween rootJump = root.transform.DOJump(otherPlayer.transform.position, 0.5f, 1, 0.2f);
+                    rootJump.OnComplete(() => ResetTween(root));
+                }
+            }
+        }
+    }
+
+    private void ResetTween(GameObject root)
+    {
+        root.transform.localPosition = new Vector3(0,0,0);
+        root.SetActive(false);
+    }
+
+    private void GetRootForAnotherPlayer(Player player)
+    {
+        foreach (var root in player.rootHold)
+        {
+            if(root.activeInHierarchy)
+            {
+                rootHold[root.GetComponent<Root>().rootId].SetActive(true);
+            }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!isCollected)
+        { 
+            if (collision.gameObject.CompareTag("Player2"))
+            {
+                Player otherPlayer = collision.gameObject.GetComponent<Player>();
+                if(otherPlayer.isCollected)
+                {
+                    GetRootForAnotherPlayer(otherPlayer);
+                    otherPlayer.GetComponent<Collider2D>().enabled = false;
+                    otherPlayer.isCollected = false;
+                    otherPlayer.isTauting = true;
+                    otherPlayer.DisableRootToPlayer(this);
+                    StartCoroutine(FinishTauntPlayer(otherPlayer));
+                }
+                
+            }
+
+            if (collision.gameObject.CompareTag("Player1"))
+            {
+                Player otherPlayer = collision.gameObject.GetComponent<Player>();
+                if (otherPlayer.isCollected)
+                {
+                    GetRootForAnotherPlayer(otherPlayer);
+                    otherPlayer.GetComponent<Collider2D>().enabled = false;
+                    otherPlayer.isCollected = false;
+                    otherPlayer.isTauting = true;
+                    otherPlayer.DisableRootToPlayer(this);
+                    StartCoroutine(FinishTauntPlayer(otherPlayer));
+                }
+
+            }
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(playerindex == 1 && isCollected && collision.gameObject.CompareTag("PlayerBase1"))
@@ -77,7 +181,7 @@ public class Player : MonoBehaviour
             score++;
             FindObjectOfType<GameManager>().player1ScoreText.text = "P1: " + score;
             FindObjectOfType<SfxAudioManager>().PlayPlayerGoal();
-            rootCollectedByPlayer.SetActive(false);
+            DisableRootHoldToBase();
             isCollected = false;
             spotsManager.SpawnRandomizeRoot();
         }
@@ -87,33 +191,25 @@ public class Player : MonoBehaviour
             score++;
             FindObjectOfType<GameManager>().player2ScoreText.text = "P2: " + score;
             FindObjectOfType<SfxAudioManager>().PlayPlayerGoal();
-            rootCollectedByPlayer.SetActive(false);
+            DisableRootHoldToBase();
             isCollected = false;
             spotsManager.SpawnRandomizeRoot();
         }
 
-        //if(playerindex == 1 && !this.isCollected && collision.gameObject.CompareTag("Player2"))
-        //{
-        //    if(collision.gameObject.CompareTag("Player2"))
-        //    {
-        //        this.isCollected = true;
-        //        Player otherPlayer = collision.GetComponent<Player>();
-        //        otherPlayer.isCollected = false;
-        //        otherPlayer.isTauting = true;
-        //        otherPlayer.speed = 0;
-        //        StartCoroutine(FinishTauntPlayer(otherPlayer));
-        //    }
-        //}
+        
 
-       
+
     }
 
-    //IEnumerator FinishTauntPlayer(Player player)
-    //{
-    //    yield return new WaitForSeconds(2);
-    //    player.speed = defaultSpeed;
-    //    player.isTauting = false;
-    //}
+    IEnumerator FinishTauntPlayer(Player player)
+    {
+        yield return new WaitForEndOfFrame();
+        isCollected = true;
+        yield return new WaitForSeconds(2);
+        player.speed = defaultSpeed;
+        player.isTauting = false;
+        player.GetComponent<Collider2D>().enabled = true;
+    }
 
 
 }
