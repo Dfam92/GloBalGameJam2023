@@ -168,7 +168,7 @@ public class Player : MonoBehaviour
                     otherPlayer.playerAnim.enabled = false;
                     otherPlayer.playerRenderer.sprite = tauntSprite;
                     otherPlayer.PlaySqueakClip();
-
+                    FindObjectOfType<SfxAudioManager>().PlayLootSound();
                 }
                 
             }
@@ -187,6 +187,7 @@ public class Player : MonoBehaviour
                     otherPlayer.playerAnim.enabled = false;
                     otherPlayer.playerRenderer.sprite = tauntSprite;
                     otherPlayer.PlaySqueakClip();
+                    FindObjectOfType<SfxAudioManager>().PlayLootSound();
                 }
 
             }
