@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     [SerializeField] SpotsManager spotsManager;
     public AudioSource playerAudio;
     [SerializeField] AudioClip footSteps;
+    [SerializeField] AudioClip playerSqueak;
     public Color playerColor;
 
     private float defaultSpeed;
@@ -31,6 +32,8 @@ public class Player : MonoBehaviour
 
     public Vector3 defaultScale;
 
+    [SerializeField] Sprite tauntSprite;
+    [SerializeField] SpriteRenderer playerRenderer;
 
     private void Start()
     {
@@ -81,6 +84,12 @@ public class Player : MonoBehaviour
     public void PlayPlayerSteps()
     {
         PlaySfx(footSteps, 1 - 0.6f);
+    }
+
+    public void PlaySqueakClip()
+    {
+        playerAudio.Stop();
+        PlaySfx(playerSqueak, 1);
     }
 
     private void DisableRootHoldToBase()
@@ -156,6 +165,10 @@ public class Player : MonoBehaviour
                     otherPlayer.isTauting = true;
                     otherPlayer.DisableRootToPlayer(this);
                     StartCoroutine(FinishTauntPlayer(otherPlayer));
+                    otherPlayer.playerAnim.enabled = false;
+                    otherPlayer.playerRenderer.sprite = tauntSprite;
+                    otherPlayer.PlaySqueakClip();
+
                 }
                 
             }
@@ -171,6 +184,9 @@ public class Player : MonoBehaviour
                     otherPlayer.isTauting = true;
                     otherPlayer.DisableRootToPlayer(this);
                     StartCoroutine(FinishTauntPlayer(otherPlayer));
+                    otherPlayer.playerAnim.enabled = false;
+                    otherPlayer.playerRenderer.sprite = tauntSprite;
+                    otherPlayer.PlaySqueakClip();
                 }
 
             }
@@ -182,7 +198,7 @@ public class Player : MonoBehaviour
         if(playerindex == 1 && isCollected && collision.gameObject.CompareTag("PlayerBase1"))
         {
             score++;
-            FindObjectOfType<GameManager>().player1ScoreText.text = "P1: " + score;
+            FindObjectOfType<GameManager>().player1ScoreText.text = "P1 - " + score;
             FindObjectOfType<SfxAudioManager>().PlayPlayerGoal();
             DisableRootHoldToBase();
             isCollected = false;
@@ -192,7 +208,7 @@ public class Player : MonoBehaviour
         if (playerindex == 2 && isCollected && collision.gameObject.CompareTag("PlayerBase2"))
         {
             score++;
-            FindObjectOfType<GameManager>().player2ScoreText.text = "P2: " + score;
+            FindObjectOfType<GameManager>().player2ScoreText.text = "P2 - " + score;
             FindObjectOfType<SfxAudioManager>().PlayPlayerGoal();
             DisableRootHoldToBase();
             isCollected = false;
@@ -212,6 +228,7 @@ public class Player : MonoBehaviour
         player.speed = defaultSpeed;
         player.isTauting = false;
         player.GetComponent<Collider2D>().enabled = true;
+        player.playerAnim.enabled = true;
     }
 
 

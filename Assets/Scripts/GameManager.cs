@@ -18,8 +18,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         StartCoroutine(StartGameDelayed());
-        player1ScoreText.text = "P1: ";
-        player2ScoreText.text = "P2: ";
+        player1ScoreText.text = "P1 - ";
+        player2ScoreText.text = "P2 - ";
         
     }
 

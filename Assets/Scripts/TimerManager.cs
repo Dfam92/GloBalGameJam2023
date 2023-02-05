@@ -15,7 +15,7 @@ public class TimerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        tweener = timerTxt.transform.DOScale(1.5f, 0.5f).SetLoops(-1, LoopType.Yoyo).SetUpdate(true);
+        tweener = timerTxt.transform.DOScale(1.1f, 0.5f).SetLoops(-1, LoopType.Yoyo).SetUpdate(true);
         tweener.Pause();
         timeValue = roundTime;
         timerTxt.text = roundTime.ToString();
