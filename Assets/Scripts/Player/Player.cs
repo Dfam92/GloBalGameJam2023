@@ -29,11 +29,14 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject playerBase1;
     [SerializeField] GameObject playerBase2;
 
+    public Vector3 defaultScale;
+
 
     private void Start()
     {
         defaultSpeed = speed;
         speedWithLower = speed * speedVariation;
+        defaultScale = gameObject.transform.localScale;
 
         if(this.gameObject.CompareTag("Player1"))
         {

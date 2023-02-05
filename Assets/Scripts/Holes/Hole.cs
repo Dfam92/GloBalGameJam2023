@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Hole : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class Hole : MonoBehaviour
         {
             if(!collision.GetComponent<Player>().isDigging)
             {
+                collision.GetComponent<Player>().gameObject.transform.DOScale(new Vector3(0.1f, 0.1f, 0.1f), 0.2f).OnComplete(() => 
+                collision.GetComponent<Player>().gameObject.transform.DOScale(collision.GetComponent<Player>().defaultScale,0.2f));
+
                 Debug.Log(holesManager.holes.Count);
                 int index = Random.Range(0, holesManager.holes.Count);
                 bool differentNumber = false;
@@ -24,7 +28,7 @@ public class Hole : MonoBehaviour
                     }
                     
                 }
-                collision.GetComponent<Player>().gameObject.transform.position = holesManager.holes[index].transform.position;
+                StartCoroutine(EnterHoleDelayed(collision,index));
                 StartCoroutine(ReactiveCollider(collision.GetComponent<Player>()));
                 collision.GetComponent<Player>().isDigging = true;
             }
@@ -35,5 +39,11 @@ public class Hole : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         player.isDigging = false;
+    }
+
+    IEnumerator EnterHoleDelayed(Collider2D collision, int index)
+    {
+        yield return new WaitForSeconds(0.2f);
+        collision.GetComponent<Player>().gameObject.transform.position = holesManager.holes[index].transform.position;
     }
 }
