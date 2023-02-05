@@ -199,7 +199,7 @@ public class Player : MonoBehaviour
         if(playerindex == 1 && isCollected && collision.gameObject.CompareTag("PlayerBase1"))
         {
             score++;
-            FindObjectOfType<GameManager>().player1ScoreText.text = "P1 - " + score;
+            FindObjectOfType<GameManager>().player1ScoreText.text = " " + score;
             FindObjectOfType<SfxAudioManager>().PlayPlayerGoal();
             DisableRootHoldToBase();
             isCollected = false;
@@ -209,7 +209,7 @@ public class Player : MonoBehaviour
         if (playerindex == 2 && isCollected && collision.gameObject.CompareTag("PlayerBase2"))
         {
             score++;
-            FindObjectOfType<GameManager>().player2ScoreText.text = "P2 - " + score;
+            FindObjectOfType<GameManager>().player2ScoreText.text = " " + score;
             FindObjectOfType<SfxAudioManager>().PlayPlayerGoal();
             DisableRootHoldToBase();
             isCollected = false;
