@@ -817,7 +817,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Pick or Stole one Root
+  m_text: Pick or Steal one Root
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6863585c5c15ff347b80972e2180adc0, type: 2}
   m_sharedMaterial: {fileID: -9100790478362268646, guid: 6863585c5c15ff347b80972e2180adc0, type: 2}
